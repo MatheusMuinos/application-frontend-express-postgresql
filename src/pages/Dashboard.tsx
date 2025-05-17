@@ -5,7 +5,7 @@ import Loading from '../components/Loading';
 import Message from '../components/Message';
 
 export default function Dashboard() {
-  const { token, logout, user } = useAuth();
+  const { token, logout } = useAuth();
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [msg, setMsg] = useState<{ type: 'error' | 'success', text: string } | null>(null);
