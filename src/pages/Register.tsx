@@ -31,17 +31,43 @@ export default function Register() {
   };
 
   return (
-    <div className="form-container">
-      <h2>Cadastro</h2>
-      <form onSubmit={handleSubmit}>
-        <input placeholder="Nome de usuário" value={username} onChange={e => setUsername(e.target.value)} required />
-        <input placeholder="E-mail" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <input placeholder="Senha" type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+    <div className="page-bg">
+      <form className="form-box" onSubmit={handleSubmit}>
+        <h2>Cadastro</h2>
+        <label htmlFor="username">Nome de usuário</label>
+        <input
+          id="username"
+          placeholder="Digite seu nome de usuário"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          required
+        />
+        <label htmlFor="email">E-mail</label>
+        <input
+          id="email"
+          placeholder="Digite seu e-mail"
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <label htmlFor="password">Senha</label>
+        <input
+          id="password"
+          placeholder="Digite sua senha"
+          type="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+        />
         <button type="submit" disabled={loading}>Cadastrar</button>
+        {loading && <Loading />}
+        {msg && <Message type={msg.type} text={msg.text} />}
+        <div className="form-footer">
+          Já tem conta?
+          <Link to="/login">Entrar</Link>
+        </div>
       </form>
-      {loading && <Loading />}
-      {msg && <Message type={msg.type} text={msg.text} />}
-      <p>Já tem conta? <Link to="/login">Entrar</Link></p>
     </div>
   );
 }
