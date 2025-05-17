@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<{ type: 'error' | 'success', text: string } | null>(null);
@@ -18,12 +18,12 @@ export default function Login() {
     setLoading(true);
     setMsg(null);
     try {
-      const res = await login(email, senha);
+      const res = await login(username, senha);
       if (res.token) {
         setToken(res.token);
         navigate('/dashboard');
       } else {
-        setMsg({ type: 'error', text: res.error || 'Login inválido.' });
+        setMsg({ type: 'error', text: res.message || 'Login inválido.' });
       }
     } catch {
       setMsg({ type: 'error', text: 'Erro ao logar.' });
@@ -35,8 +35,19 @@ export default function Login() {
     <div className="form-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input placeholder="E-mail" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <input placeholder="Senha" type="password" value={senha} onChange={e => setSenha(e.target.value)} required />
+        <input
+          placeholder="Nome de usuário"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          required
+        />
+        <input
+          placeholder="Senha"
+          type="password"
+          value={senha}
+          onChange={e => setSenha(e.target.value)}
+          required
+        />
         <button type="submit" disabled={loading}>Entrar</button>
       </form>
       {loading && <Loading />}
