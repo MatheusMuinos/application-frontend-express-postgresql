@@ -7,7 +7,6 @@ import Message from '../components/Message';
 export default function Dashboard() {
   const { token, logout, user } = useAuth();
   const [transactions, setTransactions] = useState<any[]>([]);
-  const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [msg, setMsg] = useState<{ type: 'error' | 'success', text: string } | null>(null);
   const [descricao, setDescricao] = useState('');
@@ -19,16 +18,6 @@ export default function Dashboard() {
   const [editValor, setEditValor] = useState('');
   const [editTipo, setEditTipo] = useState('income');
   const [editReceiverUserId, setEditReceiverUserId] = useState('');
-
-  // Função para buscar usuários
-  async function loadUsers() {
-    if (!token) return;
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const data = await res.json();
-    setUsers(data.filter((u: any) => !user || u.id !== user.id)); // Remove o próprio usuário
-  }
 
   async function load() {
     setLoading(true);
@@ -43,7 +32,7 @@ export default function Dashboard() {
     setLoading(false);
   }
 
-  useEffect(() => { load(); loadUsers(); }, [token]);
+  useEffect(() => { load(); }, [token]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
