@@ -32,27 +32,34 @@ export default function Login() {
   };
 
   return (
-    <div className="form-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="page-bg">
+      <form className="form-box" onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        <label htmlFor="username">Seu nome de usuário</label>
         <input
-          placeholder="Nome de usuário"
+          id="username"
+          placeholder="Digite seu nome de usuário"
           value={username}
           onChange={e => setUsername(e.target.value)}
           required
         />
+        <label htmlFor="senha">Sua senha</label>
         <input
-          placeholder="Senha"
+          id="senha"
+          placeholder="Digite sua senha"
           type="password"
           value={senha}
           onChange={e => setSenha(e.target.value)}
           required
         />
-        <button type="submit" disabled={loading}>Entrar</button>
+        <button type="submit" disabled={loading}>Logar</button>
+        {loading && <Loading />}
+        {msg && <Message type={msg.type} text={msg.text} />}
+        <div className="form-footer">
+          Ainda não tem conta?
+          <Link to="/register">Cadastre-se</Link>
+        </div>
       </form>
-      {loading && <Loading />}
-      {msg && <Message type={msg.type} text={msg.text} />}
-      <p>Não tem conta? <Link to="/register">Cadastre-se</Link></p>
     </div>
   );
 }
