@@ -127,84 +127,86 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
-      <h2>Área Logada</h2>
-      <button onClick={logout}>Logout</button>
-      <form onSubmit={editId ? handleUpdate : handleCreate}>
-        <input
-          placeholder="Descrição"
-          value={editId ? editDescricao : descricao}
-          onChange={e => editId ? setEditDescricao(e.target.value) : setDescricao(e.target.value)}
-          required
-        />
-        <input
-          placeholder="Valor"
-          value={editId ? editValor : valor}
-          onChange={e => editId ? setEditValor(e.target.value) : setValor(e.target.value)}
-          required
-        />
-        <select value={editId ? editTipo : tipo} onChange={e => editId ? setEditTipo(e.target.value) : setTipo(e.target.value)} required>
-          <option value="income">Entrada</option>
-          <option value="expense">Saída</option>
-          <option value="transfer">Transferência</option>
-        </select>
-        {}
-        {(editId ? editTipo : tipo) === 'transfer' && (
-          <input
-            type="number"
-            placeholder="ID do usuário de destino"
-            value={editId ? editReceiverUserId : receiverUserId}
-            onChange={e => editId ? setEditReceiverUserId(e.target.value) : setReceiverUserId(e.target.value)}
-            required
-          />
-        )}
-        <button type="submit" disabled={loading}>{editId ? 'Salvar' : 'Adicionar'}</button>
-        {editId && <button onClick={cancelEdit} disabled={loading}>Cancelar</button>}
-      </form>
-      {loading && <Loading />}
-      {msg && <Message type={msg.type} text={msg.text} />}
-      <ul>
-        {transactions.map((item: any) => (
-          <li key={item.id}>
-            {item.description || item.descricao} - {item.amount || item.valor} - {item.type || item.tipo}
-            <button onClick={() => handleDelete(item.id)} disabled={loading}>Excluir</button>
-            <button onClick={() => startEdit(item)} disabled={loading}>Editar</button>
-          </li>
-        ))}
-      </ul>
-      {editId && (
-        <form onSubmit={handleUpdate} className="form-container">
-          <h3>Editar Transação</h3>
+    <div className="page-bg">
+      <div className="form-box">
+        <h2>Área Logada</h2>
+        <button onClick={logout} style={{ marginBottom: '1em' }}>Logout</button>
+        <form onSubmit={editId ? handleUpdate : handleCreate}>
           <input
             placeholder="Descrição"
-            value={editDescricao}
-            onChange={e => setEditDescricao(e.target.value)}
+            value={editId ? editDescricao : descricao}
+            onChange={e => editId ? setEditDescricao(e.target.value) : setDescricao(e.target.value)}
             required
           />
           <input
             placeholder="Valor"
-            value={editValor}
-            onChange={e => setEditValor(e.target.value)}
+            value={editId ? editValor : valor}
+            onChange={e => editId ? setEditValor(e.target.value) : setValor(e.target.value)}
             required
           />
-          <select value={editTipo} onChange={e => setEditTipo(e.target.value)} required>
+          <select value={editId ? editTipo : tipo} onChange={e => editId ? setEditTipo(e.target.value) : setTipo(e.target.value)} required>
             <option value="income">Entrada</option>
             <option value="expense">Saída</option>
             <option value="transfer">Transferência</option>
           </select>
-          {editTipo === 'transfer' && (
+          {}
+          {(editId ? editTipo : tipo) === 'transfer' && (
             <input
               type="number"
               placeholder="ID do usuário de destino"
-              value={editReceiverUserId}
-              onChange={e => setEditReceiverUserId(e.target.value)}
+              value={editId ? editReceiverUserId : receiverUserId}
+              onChange={e => editId ? setEditReceiverUserId(e.target.value) : setReceiverUserId(e.target.value)}
               required
             />
           )}
-          <button type="submit" disabled={loading}>Salvar</button>
-          <button type="button" onClick={cancelEdit} disabled={loading}>Cancelar</button>
+          <button type="submit" disabled={loading}>{editId ? 'Salvar' : 'Adicionar'}</button>
+          {editId && <button onClick={cancelEdit} disabled={loading}>Cancelar</button>}
         </form>
-      )}
+        {loading && <Loading />}
+        {msg && <Message type={msg.type} text={msg.text} />}
+        <ul>
+          {transactions.map((item: any) => (
+            <li key={item.id}>
+              {item.description || item.descricao} - {item.amount || item.valor} - {item.type || item.tipo}
+              <button onClick={() => handleDelete(item.id)} disabled={loading}>Excluir</button>
+              <button onClick={() => startEdit(item)} disabled={loading}>Editar</button>
+            </li>
+          ))}
+        </ul>
+        {editId && (
+          <form onSubmit={handleUpdate} className="form-container">
+            <h3>Editar Transação</h3>
+            <input
+              placeholder="Descrição"
+              value={editDescricao}
+              onChange={e => setEditDescricao(e.target.value)}
+              required
+            />
+            <input
+              placeholder="Valor"
+              value={editValor}
+              onChange={e => setEditValor(e.target.value)}
+              required
+            />
+            <select value={editTipo} onChange={e => setEditTipo(e.target.value)} required>
+              <option value="income">Entrada</option>
+              <option value="expense">Saída</option>
+              <option value="transfer">Transferência</option>
+            </select>
+            {editTipo === 'transfer' && (
+              <input
+                type="number"
+                placeholder="ID do usuário de destino"
+                value={editReceiverUserId}
+                onChange={e => setEditReceiverUserId(e.target.value)}
+                required
+              />
+            )}
+            <button type="submit" disabled={loading}>Salvar</button>
+            <button type="button" onClick={cancelEdit} disabled={loading}>Cancelar</button>
+          </form>
+        )}
+      </div>
     </div>
   );
 }
